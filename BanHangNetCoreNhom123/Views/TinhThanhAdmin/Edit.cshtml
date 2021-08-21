@@ -1,0 +1,32 @@
+﻿@model BanHangNetCoreNhom123.Models.TinhThanh
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Views/Layout/Admin/Layout.cshtml";
+}
+
+<div class="modal-dialog" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Sửa tỉnh thành</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <form asp-action="Edit">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="MaTinhThanh" />
+                <div class="form-group">
+                    Tên tỉnh thành
+                    <input asp-for="TenTinhThanh" class="form-control" />
+                    <span asp-validation-for="TenTinhThanh" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <a asp-controller="TinhThanhAdmin" asp-action="Index" type="button"><button class="btn btn-secondary" data-dismiss="modal">Trở về</button></a>
+                    <button type="submit" class="btn btn-primary">Lưu</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

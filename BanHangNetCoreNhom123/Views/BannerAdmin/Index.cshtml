@@ -1,0 +1,92 @@
+﻿@model IEnumerable<BanHangNetCoreNhom123.Models.Banner>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Layout/Admin/Layout.cshtml";
+}
+
+<h1>Quản lý banner quảng cáo</h1>
+
+<p>
+    <a asp-action="Create"><button class="btn btn-primary"><li class="fa fa-plus"></li> Thêm mới</button></a>
+</p>
+
+<div class="container text-center">
+    <div class="row">
+        <div class="col col-12">
+            <table class="table">
+                <thead class="thead-light">
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Hình ảnh</th>
+                        <th scope="col">Tiêu đề</th>
+                        <th scope="col">Nội dung</th>
+                        <th scope="col">Chức năng</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{
+                        var i = 1;
+                        foreach (var item in ViewBag.List)
+                        {
+                                        <tr>
+                                            <th scope="row">@i</th>
+                                                <td><img src="~/user/images/@item.UrlBanner" style="width:180px;height:60px;"/></td>
+                                                <td>@item.TieuDe</td>
+                                                <td>@item.NoiDung</td>
+                                            <td>
+                                               <button class="btn btn-primary thongtin" data-id="@item.MaBanner" data-toggle="modal" data-target="#exampleModal"><i class="fa fa-info" aria-hidden="true"></i></button>
+                                                <button class="btn btn-danger Xoane" data-toggle="modal" data-target="@String.Concat("#exampleModal1",@item.MaBanner)">
+                                                    <i class="fa fa-times" aria-hidden="true"></i>
+                                                </button>
+
+                                                <div class="modal fade" id="@String.Concat("exampleModal1",@item.MaBanner)" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1" aria-hidden="true">
+                                                    <div class="modal-dialog" role="document">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title" id="exampleModalLabel" style="text-align:center">Xóa Banner</h5>
+                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                    <span aria-hidden="true">&times;</span>
+                                                                </button>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                Bạn có muốn xóa không ?
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                                <a asp-action="Delete" asp-route-id="@item.MaBanner"> <button type="button" class="btn btn-primary">Xóa</button></a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                            i++;
+                        }
+                    }
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel" style="text-align:center">Thông Tin Banner</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div id="result">
+
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,161 @@
+﻿@model IEnumerable<BanHangNetCoreNhom123.Models.GioHang>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Layout/Admin/Layout.cshtml";
+}
+
+@{
+    double Total = 0;
+}
+<div class="container-fluid">
+
+    <!-- Page Heading -->
+    <h1 class="h3 mb-2 text-gray-800">Quản lý hóa đơn</h1>
+
+    <!-- DataTales Example -->
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+           
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>
+                                Loại khách hàng
+                            </th>
+                            <th>
+                                Tên khách hàng
+                            </th>
+                            <th>
+                                Tổng tiền
+                            </th>
+                            <th>
+                                Ngày đặt hàng
+                            </th>
+                            <th>
+                                Trạng thái
+                            </th>
+                            <th>
+                                Chức năng
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            Total += Convert.ToDouble(item.TongCong);
+                        <tr role="row" class="odd">
+                            <td class="sorting_1">
+                                <font style="vertical-align: inherit;">
+                                    <font style="vertical-align: inherit;">
+                                        @{
+                                            if (@item.MaTaiKhoan == null)
+                                            {
+                                                <span style="color:red">Khách không có tài khoản</span>
+                                            }
+                                            else
+                                            {
+                                                <span style="color:green"><b>Khách có tài khoản</b></span>
+                                            }
+                                        }
+
+                                    </font>
+                                </font>
+                            </td>
+                            <td>
+                                <font style="vertical-align: inherit;">
+                                    <font style="vertical-align: inherit;">@item.MaKhachHangNavigation.TenKhachHang</font>
+                                </font>
+                            </td>
+                            <td>
+                                <font style="vertical-align: inherit;">
+                                    <font style="vertical-align: inherit;">@String.Format("{0:N0}", item.TongCong)<u>đ</u></font>
+                                </font>
+                            </td>
+                            <td>
+                                <font style="vertical-align: inherit;">
+                                    <font style="vertical-align: inherit;">@item.NgayDat</font>
+                                </font>
+                            </td>
+                            <td>
+                                <font style="vertical-align: inherit;">
+                                    <font style="vertical-align: inherit;">
+                                        
+                                                                        @{
+                                                                            if (@item.TrangThai == 1)
+                                                                            {
+                                                                               <span style="color:green"><b>Đã giao</b></span>
+                                                                            }
+                                                                            else
+                                                                            {
+                                                                                <a asp-action="ChangedStatus" asp-route-id="@item.MaGioHang"  onclick="connfirm()" style="color:red">Chưa giao</a>
+                                                                            }
+                                                                        }
+                                                                    </font>
+                                </font>
+                            </td>
+                            <td>
+                                <a asp-action="Details" asp-route-id="@item.MaGioHang">
+                                    <button class="btn btn-primary">
+                                        <i class="fas fa-info"></i>
+                                    </button>
+                                </a>|
+                                @*<a asp-action="Delete" asp-route-id="@item.MaGioHang">
+                <button class="btn btn-danger">
+                    <i class="fas fa-times"></i>
+                </button>
+            </a>*@
+                                <button class="btn btn-danger Xoane" data-toggle="modal" data-target="@String.Concat("#exampleModal1",@item.MaGioHang)">
+                                    <i class="fa fa-times" aria-hidden="true"></i>
+                                </button>
+
+                                <div class="modal fade" id="@String.Concat("exampleModal1",@item.MaGioHang)" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalLabel" style="text-align:center">Xóa Đơn Hàng</h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                Bạn có muốn xóa @item.MaGioHang không ?
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                <a asp-action="Delete" asp-route-id="@item.MaGioHang"> <button type="button" class="btn btn-primary">Xóa</button></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script>
+    function connfirm() {
+        if (confirm("Xác nhận đơn hàng đã giao?")) {
+            $.ajax({
+                url: "/OrderManager/ChangedStatus",
+                data: id,
+                success: function (data) { }
+            });
+        }
+        return false;
+    }
+</script>
+<div class="col-sm-6"></div>
+<div class="col-sm-6">
+    <h1>TỔNG THU NHẬP: <span>@String.Format("{0:N0}", @Total)<u>đ</u></span> </h1>
+</div>

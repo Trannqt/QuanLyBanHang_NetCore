@@ -1,0 +1,147 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+    Layout = "~/Views/Layout/User/Layout.cshtml";
+}
+
+<div class="clearfix"></div>
+<div class="hom-slider">
+    <div class="container">
+        <div id="sequence">
+            <div class="sequence-prev"><i class="fa fa-angle-left"></i></div>
+            <div class="sequence-next"><i class="fa fa-angle-right"></i></div>
+            <ul class="sequence-canvas">
+                @{
+                    foreach (var item in ViewBag.Banner)
+                    {
+                        <li>
+                            <div class="flat-caption caption1 formLeft delay300 text-center"><span class="suphead">@item.TieuDe</span></div>
+                            <div class="flat-caption caption3 formLeft delay500 text-center">
+                                <p>@item.NoiDung</p>
+                            </div>
+                            <div class="flat-button caption4 formLeft delay600 text-center"><a class="more" href="#">More Details</a></div>
+                            <div class="flat-image formBottom delay200" data-duration="5" data-bottom="true"><img src="~/user/images/@item.UrlBanner" alt=""></div>
+                        </li>
+                    }
+                }
+
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="carousel-item">
+    <img src="..." alt="...">
+    <div class="carousel-caption d-none d-md-block">
+        <h5>...</h5>
+        <p>...</p>
+    </div>
+</div>
+<div class="clearfix"></div>
+<div class="container_fullwidth">
+    <div class="container">
+        <div class="hot-products">
+            <h3 class="title"><strong>Sản phẩm </strong>mua nhiều nhất</h3>
+            <div class="control"><a id="prev_hot" class="prev" href="#">&lt;</a><a id="next_hot" class="next" href="#">&gt;</a></div>
+            <ul id="hot">
+                <li>
+                    <div class="row">
+                        @{
+                            foreach (var item in ViewBag.ListProduct)
+                            {
+
+                                <div class="col-md-3 col-sm-6">
+                                                            <div class="products">
+                                                                @{
+                                                                    if (item.KhuyenMai != 0)
+                                                                    {
+                                                                        <div class="offer">-@item.KhuyenMai%</div>
+                                                                    }
+
+                                                                }
+
+                                                                <div class="thumbnail"><a asp-controller="SingleProduct" asp-action="Index" asp-route-id="@item.MaThucDon"><img src="~/user/images/products/@item.HinhAnh" alt="Product Name"></a></div>
+                                                                <div class="productname">@item.TenThucDon</div>
+                                                                @{
+                                                                    if (item.KhuyenMai != 0)
+                                                                    {
+                                                                        <h4 class="price">@string.Format("{0:N0}", @item.GetGiaKhuyenMai)<u>đ</u>   <span class="sale" style="font-size:15px;"><del>@item.Gia <u>đ</u></del></span></h4>
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <h4 class="price">
+                                                                            @item.GetGiaKhuyenMai<u>đ</u>
+                                                                        </h4>
+                                                                    }
+
+                                                                }
+                                                                        <div class="button_group">
+                                                                            <a><div class="order-button"><button class="button add-cart" data-id="@item.MaThucDon" type="button"><i class="fa fa-shopping-cart"></i> Mua hàng</button></div></a>
+                                                                            <a asp-controller="SingleProduct" asp-action="Index" asp-route-id="@item.MaThucDon">
+                                                                                <button class="button wishlist" type="button" style="width:140px;font-size:16px;">
+                                                                                    <i class="fa fa-info-circle" aria-hidden="true"></i>  Chi tiết
+                                                                                </button>
+                                                                            </a>
+                                                                        </div>
+                                                                </div>
+                                </div>
+                            }
+                        }
+                        
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div class="clearfix"></div>
+        <div class="featured-products">
+            <h3 class="title"><strong>Sản phẩm </strong> đang giảm giá</h3>
+            <div class="control"><a id="prev_featured" class="prev" href="#">&lt;</a><a id="next_featured" class="next" href="#">&gt;</a></div>
+            <ul id="featured">
+                <li>
+                    <div class="row">
+                        @{
+                            foreach (var item in ViewBag.ListDiscount)
+                            {
+                                
+                                <div class="col-md-3 col-sm-6">
+                                                            <div class="products">
+                                                                @{
+                                                                    if (item.KhuyenMai != 0)
+                                                                    {
+                                                                        <div class="offer">-@item.KhuyenMai%</div>
+                                                                    }
+
+                                                                }
+
+                                                                <div class="thumbnail"><a asp-controller="SingleProduct" asp-action="Index" asp-route-id="@item.MaThucDon"><img src="~/user/images/products/@item.HinhAnh" alt="Product Name"></a></div>
+                                                                <div class="productname">@item.TenThucDon</div>
+                                                                @{
+                                                                    if (item.KhuyenMai != 0)
+                                                                    {
+                                                                        <h4 class="price">@string.Format("{0:N0}", @item.GetGiaKhuyenMai)<u>đ</u>   <span class="sale" style="font-size:15px;"><del>@item.Gia <u>đ</u></del></span></h4>
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <h4 class="price">
+                                                                            @item.GetGiaKhuyenMai<u>đ</u>
+                                                                        </h4>
+                                                                    }
+
+                                                                }
+                                                                <div class="button_group">
+                                                                    <a><div class="order-button"><button class="button add-cart" data-id="@item.MaThucDon" type="button"><i class="fa fa-shopping-cart"></i> Mua hàng</button></div></a>
+                                                                    <a asp-controller="SingleProduct" asp-action="Index" asp-route-id="@item.MaThucDon">
+                                                                        <button class="button wishlist" type="button" style="width:140px;font-size:16px;">
+                                                                            <i class="fa fa-info-circle" aria-hidden="true"></i>  Chi tiết
+                                                                        </button>
+                                                                    </a>
+                                                                </div>
+                                                            </div>
+                                </div>
+                            }
+                        }
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+</div>

@@ -1,0 +1,33 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+<div>
+    <table class="table">
+        <tr>
+            <td class="col-sm-2">
+                Tiêu đề
+            </td>
+            <td class="col-sm-10">
+                @ViewBag.Banner.TieuDe
+            </td>
+        </tr>
+        <tr>
+            <td class="col-sm-2">
+                Nội dung
+            </td>
+            <td class="col-sm-10">
+                @ViewBag.Banner.NoiDung
+            </td>
+        </tr>
+
+        <tr>
+            <td class="col-sm-2">
+                Ảnh 
+            </td>
+            <td class="col-sm-10">
+                <img src="~/user/images/@ViewBag.Banner.UrlBanner" style="width:70px;height:70px;" />
+            </td>
+        </tr>
+    </table>
+</div>

@@ -1,0 +1,102 @@
+﻿@model BanHangNetCoreNhom123.Models.OderViewModel
+
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Layout/Admin/Layout.cshtml";
+}
+<center><h1>Chi tiết đơn hàng</h1></center>
+<div class="row" style="width:50%; height:auto; margin: 0 auto;">
+    <div class="col-sm-6">
+
+        <dl class="row">
+            <dt class="col-sm-5">
+                Mã tài khoản
+            </dt>
+            <dd class="col-sm-7">
+                @{
+                    var t = @Html.DisplayFor(model => model.giohang.MaTaiKhoan);
+                    if (t == null)
+                    {
+                        <p>Khách hàng vãng lai</p>
+                    }
+                    if (t != null)
+                    {
+                        <p>@Html.DisplayFor(model => model.giohang.MaTaiKhoan)</p>
+                    }
+
+                }
+            </dd>
+            <dt class="col-sm-5">
+                Tổng cộng
+            </dt>
+            <dd class="col-sm-7">
+                @Html.DisplayFor(model => model.giohang.TongCong)<u>đ</u>
+            </dd>
+            <dt class="col-sm-5">
+                Ngày đặt
+            </dt>
+            <dd class="col-sm-7">
+                @Html.DisplayFor(model => model.giohang.NgayDat)
+            </dd>
+            <dt class="col-sm-5">
+                Trạng thái
+            </dt>
+            <dd class="col-sm-7">
+                @Html.DisplayFor(model => model.giohang.TrangThai)
+            </dd>
+            <dt class="col-sm-5">
+            </dt>
+
+        </dl>
+    </div>
+    @{ 
+        double total = 0;
+    }
+    <div class="row">
+        <div class="col-sm-12">
+            <table border="1" style="text-align:center;border:1px solid blue; margin-bottom:20px;" cellpadding="17">
+                <thead>
+                    <tr>
+                        <td>Mã sản phẩm</td>
+                        <td>Tên sản phẩm</td>
+                        <td>Số lượng</td>
+                        <td>Đơn giá</td>
+                        <td>Thành tiền</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.ctgiohangs)
+                    {
+                        
+                            total += Convert.ToDouble(item.thanhtien);
+                        
+                        <tr>
+                            <td>
+                                @item.masp
+                            </td>
+                            <td>
+                                @item.tensp
+                            </td>
+                            <td>
+                                @item.soluong
+                            </td>
+                            <td>
+                                @item.gia
+                            </td>
+                            <td>
+                                @item.thanhtien
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <br />
+    <br />
+    <div></div>
+    <h1>Tổng tiền: @String.Format("{0:N0}",total)<u>đ</u></h1>
+    <hr />
+    <a asp-action="Index"><input type="button" class="btn btn-primary" value="Trở về" style="margin-top:10px;"/></a>
+</div>

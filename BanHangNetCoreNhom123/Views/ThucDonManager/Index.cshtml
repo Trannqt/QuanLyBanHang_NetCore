@@ -1,0 +1,134 @@
+﻿@model IEnumerable<BanHangNetCoreNhom123.Models.ThucDon>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Layout/Admin/Layout.cshtml";
+}
+
+<div class="col-sm-6">
+    <h1>Danh Sách Sản Phẩm</h1>
+    <a asp-action="Create"><button class="btn btn-outline-primary"><i class="fas fa-plus" style="font-size:40px"></i></button></a>
+</div>
+<br />
+<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+    <div class="card">
+        @*<h5 class="card-header">Danh Sách User</h5>*@
+        <div class="card-body p-0">
+            <div class="table">
+                <table class="table">
+                    <thead style="background-color:#f1f1f1">
+                        <tr class="border-0">
+                            <th>
+                                Mã Loại
+                            </th>
+                            <th>
+                                Tên sản phẩm
+                            </th>
+                            <th>
+                                Hình ảnh
+                            </th>
+                            <th>
+                                Giá
+                            </th>
+                            <th>
+                                Khuyến mãi
+                            </th>
+                            <th>
+                                Mô tả
+                            </th>
+                            <th>
+                                Lượt xem
+                            </th>
+                            <th>
+                                Lượt mua
+                            </th>
+                            <th>
+                                Chức năng
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody style="color:black">
+                        @foreach (var item in Model)
+                        {
+                        <tr>
+                            <td>
+                                @item.MaLoai
+                            </td>
+                            <td>
+                                @item.TenThucDon
+                            </td>
+                            <td>
+                                <img src="~/user/images/products/@item.HinhAnh" style="height:70px; width:70px;" />
+                            </td>
+                            <td>
+                                @item.Gia
+                            </td>
+                            <td>
+                                @item.KhuyenMai
+                            </td>
+                            <td>
+                                @item.MoTa
+                            </td>
+                            <td>
+                                @{ 
+                                    if (item.LuotXem == null)
+                                    {
+                                        item.LuotXem = 0;
+                                    }
+                                }
+                                @item.LuotXem
+                            </td>
+                            <td>
+                                @{
+                                    if (item.LuotMua == null)
+                                    {
+                                        item.LuotMua = 0;
+                                    }
+                                }
+                                @item.LuotMua
+                            </td>
+
+                            <td>
+                                <a asp-action="Edit" asp-route-id="@item.MaThucDon">
+                                    <i class="fas fa-edit"></i>
+                                </a>|
+                                <a asp-action="Details" asp-route-id="@item.MaThucDon">
+                                    <i class="fas fa-info-circle"></i>
+                                </a>|
+                                <a asp-action="Delete" asp-route-id="@item.MaThucDon" data-toggle="modal" data-target="@String.Concat("#exampleModal1",@item.MaThucDon)">
+                                    <i class="fas fa-trash-alt"></i>
+                                </a>
+
+                                @*<button class="btn btn-danger Xoane" data-toggle="modal" data-target="@String.Concat("#exampleModal1",@item.MaTaiKhoan)">
+                                    <i class="fa fa-times" aria-hidden="true"></i>
+                                </button>*@
+
+                                <div class="modal fade" id="@String.Concat("exampleModal1",@item.MaThucDon)" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalLabel" style="text-align:center">Xóa</h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                Bạn có muốn xóa @item.TenThucDon không ?
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                <a asp-action="Delete" asp-route-id="@item.MaThucDon"> <button type="button" class="btn btn-primary">Xóa</button></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </td>
+                        </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

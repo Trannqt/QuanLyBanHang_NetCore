@@ -1,0 +1,116 @@
+﻿@model BanHangNetCoreNhom123.Models.TaiKhoan
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Layout/Admin/Layout.cshtml";
+}
+
+<div class="modal-dialog" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Thêm tài khoản</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <form asp-action="Create" enctype="multipart/form-data">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="MaTaiKhoan" />
+                <div class="form-group">
+                    Tên tài khoản
+                    <input asp-for="TenTaiKhoan" class="form-control" />
+                    <span asp-validation-for="TenTaiKhoan" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    Mã phân quyền
+                    <select asp-for="MaPhanQuyen" class="form-control" asp-items="ViewBag.MaPhanQuyen"></select>
+                    <span asp-validation-for="MaPhanQuyen" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    Email
+                    <input asp-for="Email" class="form-control" />
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    Ảnh đại diện
+                    <input asp-for="Email" class="form-control" class="form-control-file" type="file" name="avatar" onchange="previewImg(this,'preview_img')" />
+                    @*<input class="form-control-file" type="file" name="avatar" onchange="previewImg(this,'preview_img')">*@
+                    <img id="preview_img" src="/images/product/no-preview.jpg" width="100" height="100">
+                    <span asp-validation-for="AnhDaiDien" class="text-danger"></span>
+                </div>
+                <script>
+                                    function previewImg(input, id_string) {
+                                        var exp_string = "#";
+                                        exp_string += id_string;
+                                        if (input.files && input.files[0]) {
+                                            var reader = new FileReader();
+
+                                            reader.onload = function (e) {
+                                                $(exp_string).attr('src', e.target.result);
+                                            }
+
+                                            reader.readAsDataURL(input.files[0]);
+                                        }
+                                    }
+                </script>
+                <div class="form-group">
+                    <label asp-for="DangHoatDong" class="control-label"></label>
+                    <input asp-for="DangHoatDong" class="form-control" value="0" />
+                    <span asp-validation-for="DangHoatDong" class="text-danger"></span>
+                </div>
+                <div class="modal-footer">
+                    <a asp-controller="TaiKhoanAdmin" asp-action="Index" type="button"><button class="btn btn-secondary" data-dismiss="modal">Trở về</button></a>
+                    <button type="submit" class="btn btn-primary">Lưu</button>
+                </div>
+            </form>
+        </div>
+
+    </div>
+</div>
+
+@*<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="TenTaiKhoan" class="control-label"></label>
+                <input asp-for="TenTaiKhoan" class="form-control" />
+                <span asp-validation-for="TenTaiKhoan" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MatKhau" class="control-label"></label>
+                <input asp-for="MatKhau" class="form-control" />
+                <span asp-validation-for="MatKhau" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MaPhanQuyen" class="control-label"></label>
+                <select asp-for="MaPhanQuyen" class ="form-control" asp-items="ViewBag.MaPhanQuyen"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="Email" class="control-label"></label>
+                <input asp-for="Email" class="form-control" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="AnhDaiDien" class="control-label"></label>
+                <input asp-for="AnhDaiDien" class="form-control" />
+                <span asp-validation-for="AnhDaiDien" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DangHoatDong" class="control-label"></label>
+                <input asp-for="DangHoatDong" class="form-control" />
+                <span asp-validation-for="DangHoatDong" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>*@
+
+@*<div>
+    <a asp-action="Index">Back to List</a>
+</div>*@
+

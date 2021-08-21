@@ -1,0 +1,47 @@
+﻿@{
+    Layout = null;
+}
+@Html.Partial("~/Views/Layout/User/Head.cshtml")
+<body id="home" onload="OnLoad();">
+
+    <div class="wrapper">
+        <!---Header--->
+        @Html.Partial("~/Views/Layout/User/Header.cshtml")
+        <!---End Header--->
+        <!---Content-->
+        @RenderBody();
+        <!---End content-->
+        <div class="clearfix"></div>
+        <!-- start footer Area -->
+        @Html.Partial("~/Views/Layout/User/Footer.cshtml")
+        <!-- End footer Area -->
+    </div>
+    @Html.Partial("~/Views/Layout/User/JS.cshtml")
+</body>
+</html>
+<script>
+    function OnLoad() {
+        //alert('load');
+        $.ajax({
+            type: "GET",
+            url: '/menu/getAllCate',
+            data: {},
+            success: function (response) {
+                //alert(response);
+                $(".dropdown-menu #ketqua").html(response);
+            }
+        });
+
+        $.ajax({
+            type: "POST",
+            url: '/Home/SLOnline',
+            data: {},
+            success: function (response) {
+                //alert(response);
+                $("#soluongonline").html(response);
+            }
+        });
+    }
+</script>
+
+@*soluongonline*@

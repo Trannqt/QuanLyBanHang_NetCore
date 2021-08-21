@@ -1,0 +1,71 @@
+﻿@model BanHangNetCoreNhom123.Models.TaiKhoan
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Views/Layout/Admin/Layout.cshtml";
+}
+
+
+<div class="modal-dialog" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Sửa tài khoản</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <form asp-action="Edit" enctype="multipart/form-data">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="MaTaiKhoan" />
+                <div class="form-group">
+                    Tên tài khoản
+                    <input asp-for="TenTaiKhoan" class="form-control" />
+                    <span asp-validation-for="TenTaiKhoan" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    Mã phân quyền
+                    <select asp-for="MaPhanQuyen" class="form-control" asp-items="ViewBag.MaPhanQuyen"></select>
+                    <span asp-validation-for="MaPhanQuyen" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    Email
+                    <input asp-for="Email" class="form-control" />
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    Ảnh đại diện
+                    <input asp-for="AnhDaiDien" class="form-control" class="form-control-file" type="file" name="avatar" onchange="previewImg(this,'preview_img')" />
+                    @*<input class="form-control-file" type="file" name="avatar" onchange="previewImg(this,'preview_img')">*@
+                    <img id="preview_img" src="~/user/images/khachhang/@ViewBag.TaiKhoan.AnhDaiDien" width="100" height="100">
+                    <span asp-validation-for="AnhDaiDien" class="text-danger"></span>
+                </div>
+                <script>
+                    function previewImg(input, id_string) {
+                        var exp_string = "#";
+                        exp_string += id_string;
+                        if (input.files && input.files[0]) {
+                            var reader = new FileReader();
+
+                            reader.onload = function (e) {
+                                $(exp_string).attr('src', e.target.result);
+                            }
+
+                            reader.readAsDataURL(input.files[0]);
+                        }
+                    }
+                </script>
+                <div class="form-group">
+                    Đang hoạt động
+                    <input asp-for="DangHoatDong" class="form-control" />
+                    <span asp-validation-for="DangHoatDong" class="text-danger"></span>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary col-12">Lưu</button>
+                </div>
+
+            </form>
+            <a asp-controller="TaiKhoanAdmin" asp-action="Index"><button class="btn btn-danger col-12">Trở về</button></a>
+        </div>
+    </div>
+</div>

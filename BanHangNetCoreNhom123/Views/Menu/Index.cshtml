@@ -1,0 +1,231 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Layout/User/Layout.cshtml";
+}
+
+<div class="container_fullwidth">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3">
+                <div class="category leftbar">
+                    <h3 class="title">
+                        Loại hàng hóa
+                    </h3>
+                    <ul id="category">
+                        @{
+                            foreach (var item in ViewBag.ListCate)
+                            {
+                                <li>
+                                    <a data-url="@item.MaLoai">
+                                        @item.TenLoai
+                                    </a>
+                                </li>
+                            }
+
+                        }
+                    </ul>
+                </div>
+                <div class="clearfix">
+                </div>
+                <div class="branch leftbar">
+                    <h3 class="title">
+                        Nhà sản xuất
+                    </h3>
+                    <ul id="brand">
+                        @{
+                            foreach (var item in ViewBag.ListNsx)
+                            {
+                                <li>
+                                    <a data-url="@item.MaNSX">
+                                        @item.TenNSX
+                                    </a>
+                                </li>
+                            }
+                        }
+                    </ul>
+                </div>
+                <div class="clearfix">
+                </div>
+
+                <div class="clearfix">
+                </div>
+                <div class="leftbanner">
+                    <img src="images/banner-small-01.png" alt="">
+                </div>
+            </div>
+            <h1>    Sản phẩm mới nhất</h1>
+            <div class="col-md-9">
+                <div class="clearfix">
+                </div>
+                <div class="products-grid">
+                    <div class="toolbar">
+                        <div class="sorter">
+                            <div class="sort-by">
+                                Sort by :
+                                <select class="sortby">
+                                    <option value="Default" selected>
+                                        Default
+                                    </option>
+                                    <option value="Name">
+                                        Name
+                                    </option>
+                                    <option value="Price">
+                                        Price
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <script type="text/javascript">
+                        $(document).ready(function () {
+                            $('select.sortby').change(function (e) {
+                                var value = $(this).children("option:selected").val();
+                                //alert(value);
+                                $.ajax({
+                                    type: "POST",
+                                    url: '/Menu/sortby?value=' + value,
+                                    success: function (result) {
+                                        //alert(result);
+                                        $("#result").html(result);
+                                    }
+                                });
+                                // var selectedCountry = $(this).children("option:selected").val();
+                                //  alert("You have selected the country - " + selectedCountry);
+                            });
+                        });
+                    </script>
+                    <div class="clearfix">
+                    </div>
+
+                    <!---Search-->
+                    <div class="active-pink-3 active-pink-4 mb-4">
+                        <input class="form-control" name="txtSearch" id="txtSearch" type="text" placeholder="Bạn muốn tìm gì?" aria-label="Search">
+                    </div>
+
+                    <script>
+                        // AJAX call for autocomplete
+                        $(document).ready(function () {
+                            $(".form-control").keyup(function () {
+                                var key = $(this).val();
+                                //alert(key);
+                                $.ajax({
+                                    type: "POST",
+                                    url: "/menu/Search?key=" + key,
+                                    success: function (data) {
+                                        $("#result").html(data);
+                                    }
+                                });
+                            });
+                        });
+
+                    </script>
+                    <div class="clearfix">
+                    </div>
+                    <div class="row" id="result">
+                        @{
+                            foreach (var item in ViewBag.ListProduct)
+                            {
+                                <div class="col-md-4 col-sm-6">
+                                    <div class="products">
+
+                                        @{
+                                            if (item.KhuyenMai != 0)
+                                            {
+                                                <div class="offer">-@item.KhuyenMai%</div>
+                                            }
+
+                                        }
+
+                                        <div class="thumbnail"><a asp-controller="SingleProduct" asp-action="Index" asp-route-id="@item.MaThucDon"><img src="~/user/images/products/@item.HinhAnh" alt="Product Name"></a></div>
+                                        <div class="productname">@item.TenThucDon</div>
+                                        @{
+                                            if (item.KhuyenMai != 0)
+                                            {
+                                                <h4 class="price">@string.Format("{0:N0}", @item.GetGiaKhuyenMai)<u>đ</u>   <span class="sale" style="font-size:15px;"><del>@item.Gia <u>đ</u></del></span></h4>
+                                            }
+                                            else
+                                            {
+                                                <h4 class="price">
+                                                    @item.GetGiaKhuyenMai<u>đ</u>
+                                                </h4>
+                                            }
+
+                                        }
+                                        <div class="button_group">
+                                            <a><div class="order-button"><button class="button add-cart" data-id="@item.MaThucDon" type="button"><i class="fa fa-shopping-cart"></i> Mua hàng</button></div></a>
+                                            <a asp-controller="SingleProduct" asp-action="Index" asp-route-id="@item.MaThucDon">
+                                                <button class="button wishlist" type="button" style="width:140px;font-size:16px;">
+                                                    <i class="fa fa-info-circle" aria-hidden="true"></i>  Chi tiết
+                                                </button>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        }
+                    </div>
+
+                    <div class="clearfix">
+                    </div>
+                    <div class="toolbar">
+                        <div class="pager">
+                            <a class="prev-page" id="btnGiam">
+                                <i class="fa fa-angle-left">
+                                </i>
+                            </a>
+                            <a><input type="text" name="trang" id="trang" value="1" style="width:50px;height:25px;"></a>
+
+                            <a class="next-page" id="btnTang">
+                                <i class="fa fa-angle-right">
+                                </i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <script type="text/javascript">
+                        $(document).ready(function () {
+                            $('#btnGiam').click(function (e) {
+                                var status = 0;
+                                //alert("btnGiam");
+                                var page = $('#trang').val();
+                                var kq = Number(page) - 1;
+                                //alert(page);
+                                $.ajax({
+                                    type: "POST",
+                                    url: 'menu/GetProductByPageWithPage?page=' + page + '&status=' + status,
+                                    success: function (result) {
+                                        $("#result").html(result);
+                                        $("#trang").val(kq);
+                                    }
+                                });
+                            });
+
+                            $('#btnTang').click(function (e) {
+                                //alert("btnGiam");
+                                var status = 1;
+                                var page = $('#trang').val();
+                                var kq = Number(page) + 1;
+                                //$("#trang").val(kq);
+                                //alert(page);
+                                $.ajax({
+                                    type: "POST",
+                                    url: 'menu/GetProductByPageWithPage?page=' + page + '&status=' + status,
+                                    success: function (result) {
+                                        $("#result").html(result);
+                                        $("#trang").val(kq);
+                                    }
+                                });
+                            });
+                        });
+                    </script>
+
+                    <div class="clearfix">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="clearfix">
+        </div>
+    </div>
+</div>

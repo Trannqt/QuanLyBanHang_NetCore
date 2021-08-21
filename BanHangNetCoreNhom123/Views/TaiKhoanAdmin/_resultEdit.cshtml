@@ -1,0 +1,47 @@
+﻿
+<div>
+    <table class="table">
+        <tr>
+            <td class="col-sm-2">
+                Tên tài khoản
+            </td>
+            <td class="col-sm-10">
+                @ViewBag.TaiKhoan.TenTaiKhoan
+            </td>
+        </tr>
+        <tr>
+            <td class="col-sm-2">
+                Email
+            </td>
+            <td class="col-sm-10">
+                @ViewBag.TaiKhoan.Email
+            </td>
+        </tr>
+
+        <tr>
+            <td class="col-sm-2">
+                Ảnh đại diện
+            </td>
+            <td class="col-sm-10">
+                <img src="~/user/images/khachhang/@ViewBag.TaiKhoan.AnhDaiDien" style="width:70px;height:70px;" />
+            </td>
+        </tr>
+        <tr>
+            <td class="col-sm-2">
+                Trạng thái
+            </td>
+            <td class="col-sm-10">
+                @ViewBag.TaiKhoan.DangHoatDong
+            </td>
+        </tr>
+        <tr>
+            <td class="col-sm-2">
+                Quyền
+            </td>
+            <td class="col-sm-10">
+                @ViewBag.TaiKhoan.MaPhanQuyenNavigation.QuyenHan
+            </td>
+        </tr>
+
+    </table>
+</div>

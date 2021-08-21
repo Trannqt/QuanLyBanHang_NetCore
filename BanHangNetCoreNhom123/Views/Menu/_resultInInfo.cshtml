@@ -1,0 +1,37 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@*<h4 class="title">
+    Sản phẩm
+    <strong>
+        xem nhiều nhất
+    </strong>
+</h4>*@
+
+@{
+    foreach (var item in ViewBag.ListProduct)
+    {
+        <div class="special-item">
+            <div class="product-image">
+                <a asp-controller="SingleProduct" asp-action="Index" asp-route-id="@item.MaThucDon">
+                    <img src="~/user/images/products/@item.HinhAnh">
+                </a>
+            </div>
+            <div class="product-info">
+                <p>
+                    @item.TenThucDon
+                </p>
+                <h5 class="price" style="float:left;">
+                    @String.Format("{0:N0}", @item.GetGiaKhuyenMai)<u>đ     </u>
+                </h5>
+                @{
+                    if (item.KhuyenMai != 0)
+                    {
+                        <div class="old_price"><del><p>&nbsp;&nbsp;@String.Format("{0:N0}", @item.Gia)<u>đ</u></p></del></div>
+
+                    }
+                }
+            </div>
+        </div>
+    }
+}

@@ -1,0 +1,90 @@
+﻿
+@{
+    Layout = null;
+}
+
+@Html.Partial("~/Views/Layout/Admin/Head.cshtml")
+<body class="bg-gradient-primary">
+    <div class="container">
+
+        <div class="card o-hidden border-0 shadow-lg my-5">
+            <div class="card-body p-0">
+                <!-- Nested Row within Card Body -->
+                <div class="row">
+                    <div class="col-lg-5 d-none d-lg-block bg-register-image"></div>
+                    <div class="col-lg-7">
+                        <div class="p-5">
+                            <div class="text-center">
+                                <h1 class="h4 text-gray-900 mb-4">Tạo một tài khoản!</h1>
+                            </div>
+                            <form class="user" asp-action="SignUp" asp-controller="Login" method="post" enctype="multipart/form-data" id="signUpForm">
+                                <div class="form-group row">
+                                    <div class="col-sm-6 mb-3 mb-sm-0">
+                                        <label>Tên đăng nhập</label>
+                                        <input type="text" class="form-control form-control-user" id="username" name="username" placeholder="Username">
+                                        @if (ViewBag.AccExist != null)
+                                        {
+
+                                            <small style="color: red" class="form-text">Tên tài khoản đã tồn tại</small>
+                                        }
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <label>Mật khẩu</label>
+                                        <input type="password" class="form-control form-control-user" id="password" name="password" placeholder="Password">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label>Email</label>
+                                    <input type="email" class="form-control form-control-user" id="email" name="email" placeholder="Địa chỉ Email">
+                                </div>
+                                <div class="form-group">
+                                    <label>Ảnh đại diện</label>
+                                    <input class="form-control-file" type="file" name="avatar" onchange="previewImg(this,'preview_img')">
+                                    <img id="preview_img" src="/images/product/no-preview.jpg" width="100" height="100">
+                                </div>
+                                <script>
+                                    function previewImg(input, id_string) {
+                                        var exp_string = "#";
+                                        exp_string += id_string;
+                                        if (input.files && input.files[0]) {
+                                            var reader = new FileReader();
+
+                                            reader.onload = function (e) {
+                                                $(exp_string).attr('src', e.target.result);
+                                            }
+
+                                            reader.readAsDataURL(input.files[0]);
+                                        }
+                                    }
+                                </script>
+                                <a>
+                                    <button type="submit" class="btn btn-primary btn-user btn-block">
+                                        Đăng ký
+                                    </button>
+                                </a>
+                                <hr>
+                                <a href="index.html" class="btn btn-google btn-user btn-block">
+                                    <i class="fab fa-google fa-fw"></i> Đăng ký với Google
+                                </a>
+                                <a href="index.html" class="btn btn-facebook btn-user btn-block">
+                                    <i class="fab fa-facebook-f fa-fw"></i> Đăng ký với Facebook
+                                </a>
+                            </form>
+                            <hr>
+                            <div class="text-center">
+                                <a class="small" href="forgot-password.html">Quên mật khẩu?</a>
+                            </div>
+                            <div class="text-center">
+                                <a class="small" href="/Login">Đăng nhập</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    @Html.Partial("~/Views/Layout/Admin/JS.cshtml")
+</body>
+

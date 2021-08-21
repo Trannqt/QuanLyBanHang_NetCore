@@ -1,0 +1,32 @@
+﻿<table class="table table-dark">
+    @{
+        foreach (var item in @ViewBag.ListDanhGia)
+        {
+            <tr>
+
+                <td>
+
+
+                    <span>@item.TenTaiKhoan</span>
+                    <div>
+                        <strong><img src="~/user/images/khachhang/@item.AnhDaiDien" style="width: 70px; height:70px"></strong>
+                        <span>@item.NgayDanhGia</span>
+                    </div>
+
+                </td>
+                <td>
+
+                    <div>
+                        <p><strong>@item.TenTaiKhoan 's Comment</strong></p>
+                        <p></p>
+                        <span>@item.LoiNhanXet</span>
+
+                    </div>
+
+                </td>
+
+            </tr>
+        }
+    }
+
+</table>

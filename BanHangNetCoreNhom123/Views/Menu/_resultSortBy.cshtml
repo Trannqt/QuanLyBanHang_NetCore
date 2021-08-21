@@ -1,0 +1,44 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    foreach (var item in ViewBag.ListProduct)
+    {
+        <div class="col-md-4 col-sm-6">
+            <div class="products">
+
+                @{
+                    if (item.KhuyenMai != 0)
+                    {
+                        <div class="offer">-@item.KhuyenMai%</div>
+                    }
+
+                }
+
+                <div class="thumbnail"><a asp-controller="SingleProduct" asp-action="Index" asp-route-id="@item.MaThucDon"><img src="~/user/images/products/@item.HinhAnh" alt="Product Name"></a></div>
+                <div class="productname">@item.TenThucDon</div>
+                @{
+                    if (item.KhuyenMai != 0)
+                    {
+                        <h4 class="price">@string.Format("{0:N0}", @item.GetGiaKhuyenMai)<u>đ</u>   <span class="sale" style="font-size:15px;"><del>@item.Gia <u>đ</u></del></span></h4>
+                    }
+                    else
+                    {
+            <h4 class="price">
+                @string.Format("{0:N0}", @item.GetGiaKhuyenMai)<u>đ</u>
+            </h4>
+                    }
+
+                }
+                <div class="button_group">
+                    <a><div class="order-button"><button class="button add-cart" data-id="@item.MaThucDon" type="button"><i class="fa fa-shopping-cart"></i> Mua hàng</button></div></a>
+                    <a asp-controller="SingleProduct" asp-action="Index" asp-route-id="@item.MaThucDon">
+                        <button class="button wishlist" type="button" style="width:140px;font-size:16px;">
+                            <i class="fa fa-info-circle" aria-hidden="true"></i>  Chi tiết
+                        </button>
+                    </a>
+                </div>
+            </div>
+        </div>
+    }
+}

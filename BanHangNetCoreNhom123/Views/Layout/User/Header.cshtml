@@ -1,0 +1,169 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+<div class="header">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-2 col-sm-2">
+                <div class="logo"><a href="/home"><img src="~/user/images/logo.png" alt="FlatShop"></a></div>
+            </div>
+            <div class="col-md-10 col-sm-10">
+                <div class="header_top">
+                    <div class="row">
+                        <div class="col-md-3">
+                            @*<ul class="option_nav">
+                                <li class="dorpdown">
+                                    <a href="#">Eng</a>
+                                    <ul class="subnav">
+                                        <li><a href="#">Eng</a></li>
+                                        <li><a href="#">Vns</a></li>
+                                        <li><a href="#">Fer</a></li>
+                                        <li><a href="#">Gem</a></li>
+                                    </ul>
+                                </li>
+                                <li class="dorpdown">
+                                    <a href="#">USD</a>
+                                    <ul class="subnav">
+                                        <li><a href="#">USD</a></li>
+                                        <li><a href="#">UKD</a></li>
+                                        <li><a href="#">FER</a></li>
+                                    </ul>
+                                </li>*@
+                            </ul>
+                        </div>
+                        <div class="col-md-6">
+                            <ul class="topmenu">
+                                <li><a href="#">About Us</a></li>
+                                <li><a href="#">News</a></li>
+                                @using Microsoft.AspNetCore.Http
+                                @if (Context.Session.GetString("USERNAME_SESSION") == null)
+                                {
+                                    <li><a asp-controller="Login" asp-action="Index"><i class="fas fa-sign-in-alt"></i> Login</a></li>
+                                }
+                                else
+                                {
+                                    if (Context.Session.GetInt32("CREDENTITY_SESSION") == 2)
+                                    {
+                                        <li>
+                                            <a asp-controller="Profile" asp-action="Index"><i class="fas fa-user-alt"></i> Profile</a>
+                                        </li>
+                                    }
+                                    else
+                                    {
+                                    }
+                                    <li>
+                                        <a asp-controller="Login" asp-action="SignOut"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                                    </li>
+                                }
+                                <li><a asp-controller="Login" asp-action="SignUp"><i class="fas fa-sign-in-alt"></i> Register</a></li>
+                            </ul>
+                        </div>
+                        <div class="col-md-3">
+                            <ul class="usermenu">
+                                @using Microsoft.AspNetCore.Http
+                                @if (Context.Session.GetString("USERNAME_SESSION") == null)
+                                {
+                                }
+                                else
+                                {
+                                    if (Context.Session.GetInt32("CREDENTITY_SESSION") == 2)
+                                    {
+                                    }
+                                    else
+                                    {
+                                        <li>
+                                            <a asp-controller="DashBoard" asp-action="Index"><i class="fas fa-user-tie"></i> Management</a>
+                                        </li>
+                                    }
+                                    <li style="color: white;">
+                                        Xin chào, @Context.Session.GetString("USERNAME_SESSION")
+                                    </li>
+
+                                }
+
+
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+                <div class="header_bottom">
+                    <ul class="option nav-menu">
+                        <li id="search" class="search">
+                            @*<form><input class="search-submit" type="submit" value=""><input class="search-input" placeholder="Enter your search term..." type="text" value="" name="search"></form>*@
+                        </li>
+                        <li class="option-cart">0
+            <a href="/Cart" class="cart-icon">cart <span class="cart_no amount-cart">02</span></a>
+            <ul class="option-cart-item">
+                <li>
+                    <div class="cart-item">
+                        <div class="image"><img src="images/products/thum/products-01.png" alt=""></div>
+                        <div class="item-description">
+                            <p class="name">Lincoln chair</p>
+                            <p>Size: <span class="light-red">One size</span><br>Quantity: <span class="light-red">01</span></p>
+                        </div>
+                        <div class="right">
+                            <p class="price">$30.00</p>
+                            <a href="#" class="remove"><img src="images/remove.png" alt="remove"></a>
+                        </div>
+                    </div>
+                </li>
+                <li id="count"><span class="total">Total <strong class="0">$60.00</strong></span><button class="checkout" onClick="location.href='checkout.html'">CheckOut</button></li>
+            </ul>
+        </li>
+
+                        @*<li class="cart-icon" style="cursor:pointer">
+                            <span class="00">0</span><i class="fas fa-shopping-cart"></i>
+                            <ul style="display: block" id="cart_hidden">
+                                <li class="none-item"><p>Chưa có sản phẩm trong giỏ</p></li>
+                                <li class="none-item"><p>Chưa có sản phẩm trong giỏ</p></li>
+                                <li class="item-total">
+                                    <span class="total">TỔNG CỘNG: </span>
+                                    <span class="total-price">$0.00</span>
+                                </li>
+                                <li class="action-button">
+                                    <a asp-action="Index" asp-controller="Cart">XEM GIỎ HÀNG</a>
+                                    <a asp-action="Index" asp-controller="Checkout">THANH TOÁN</a>
+                                </li>
+
+                            </ul>
+                        </li>*@
+
+                    </ul>
+                    <div class="navbar-header"><button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse"><span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button></div>
+                    <div class="navbar-collapse collapse">
+                        <ul class="nav navbar-nav">
+                            <li>
+                                <a asp-controller="Home" asp-action="Index">Trang chủ</a>
+                            </li>
+                            <li>
+                                <a href="/menu">Thực đơn</a>
+                            </li>
+                            <li class="dropdown">
+                                <a asp-controller="Menu" asp-action="Index" class="dropdown-toggle" data-toggle="dropdown">Menu</a>
+                                <div class="dropdown-menu mega-menu">
+                                    <div class="row">
+                                        <div class="col-md-6 col-sm-6" id="ketqua">
+                                            @Html.Partial("~/Views/Layout/User/DropdownMenu.cshtml")
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li><a href="/cart">giỏ hàng</a></li>
+                            @using Microsoft.AspNetCore.Http
+                            @if (Context.Session.GetString("USERNAME_SESSION") != null)
+                            {
+
+                                <li>
+                                    <a  href="/cart/history/@Context.Session.GetString("ID_SESSION")">Lịch sử đặt hàng</a>
+                                </li>
+                            }
+
+                            <li><a asp-controller="LienHe" asp-action="Index">contact us</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

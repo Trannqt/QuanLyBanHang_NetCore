@@ -1,0 +1,422 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Layout/User/Layout.cshtml";
+}
+<div class="container_fullwidth">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-9">
+                <div class="products-details">
+                    <div class="preview_image">
+                        <div class="preview-small">
+                            <img id="zoom_03" src="~/user/images/products/@ViewBag.ThucDon.HinhAnh" data-zoom-image="images/products/Large/products-01.jpg" alt="">
+                        </div>
+
+                    </div>
+                    @{
+
+
+                    }
+                    <div class="products-description" style="text-align:center; font-family: sans-serif; background-color:#f7f3f3">
+                        <h3 class="name" style=" font-family: sans-serif;">
+                            @ViewBag.ThucDon.TenThucDon
+                        </h3>
+                        <p>
+                            <img alt="" src="images/star.png">
+                            <a class="review_num" href="#">
+                                @ViewBag.SoLuong Review(s)
+                            </a>
+                        </p>
+                        <hr />
+                        <p>
+                            Loại Sản Phẩm : @ViewBag.ThucDon.TenLoai
+                        </p>
+                        <hr style="width:250px" />
+                        <p>
+                            Nhà Sản Xuất : @ViewBag.ThucDon.TenNSX
+                        </p>
+                        <p>
+                            @ViewBag.ThucDon.MoTa
+                        </p>
+                        <hr class="border">
+                        <div class="price">
+                            Price :
+                            <span class="new_price">
+                                @ViewBag.ThucDon.GetGiaKhuyenMai
+                                <sup>
+                                    đ
+                                </sup>
+                            </span>
+                            <span class="old_price">
+                                @ViewBag.ThucDon.Gia
+                                <sup>
+                                    $
+                                </sup>
+                            </span>
+                        </div>
+                        <hr class="border">
+                        <div class="wided">
+                            <div class="qty">
+                                Qty &nbsp;&nbsp;:
+                                <select>
+                                    <option>
+                                        1
+                                    </option>
+                                </select>
+                            </div>
+                            <div class="button_group">
+                                <a><div class="order-button"><button class="button add-cart" data-id="@ViewBag.ThucDon.MaThucDon" type="button"><i class="fa fa-shopping-cart"></i> Mua hàng</button></div></a>
+                            </div>
+                        </div>
+                        <div class="clearfix">
+                        </div>
+                        <hr class="border">
+                        <img src="images/share.png" alt="" class="pull-right">
+                    </div>
+                </div>
+                <div class="clearfix">
+                </div>
+                <div class="tab-box">
+                    <div id="tabnav">
+                        <ul>
+                            <li>
+                                <a href="#Descraption">
+                                    Mô tả sản phẩm
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#Reviews">
+                                    Đánh giá
+                                </a>
+                            </li>
+
+                        </ul>
+                    </div>
+                    <div class="tab-content-wrap">
+                        <div class="tab-content" id="Descraption">
+                            <p style=" style="font-family: sans-serif;">
+                                @ViewBag.ThucDon.Description
+                            </p>
+                        </div>
+                        <div class="tab-content" id="Reviews">
+
+                            <table class="table table-dark">
+                                @{
+                                    foreach (var item in @ViewBag.ListDanhGia)
+                                    {
+                                        <tr>
+
+                                            <td>
+
+
+                                                <span>@item.TenTaiKhoan</span>
+                                                <div>
+                                                    <strong><img src="~/user/images/khachhang/@item.AnhDaiDien" style="width: 70px; height:70px"></strong>
+                                                    <span>@item.NgayDanhGia</span>
+                                                </div>
+
+                                            </td>
+                                            <td>
+
+                                                <div>
+                                                    <p><strong>@item.TenTaiKhoan 's Comment</strong></p>
+                                                    <p></p>
+                                                    <span>@item.LoiNhanXet</span>
+
+                                                </div>
+
+                                            </td>
+
+                                        </tr>
+                                    }
+                                }
+
+                            </table>
+
+
+                        </div>
+
+                        @using Microsoft.AspNetCore.Http
+                        @if (Context.Session.GetString("USERNAME_SESSION") == null)
+                        {
+                            <div style=" width:180px; margin:0 auto;">
+                                <a asp-controller="Login" asp-action="Index" role="button" class="btn btn-primary"><i style="text-align:center"></i> Đăng nhập để bình luận</a>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="col-sm-12">
+                                @*<form asp-controller="DanhGia" asp-action="AddReview">*@
+                                <input type="text" value="@ViewBag.ThucDon.MaThucDon" name="MaThucDon" id="MaThucDon" style="display:none">
+                                <input type="text" value="@Context.Session.GetString("ID_SESSION")" name="MaTaiKhoan" id="MaTaiKhoan" hidden>
+                                <input type="text" class="form-control form-control-sm" id="LoiNhanXet" name="LoiNhanXet" placeholder="Để lại ý kiến của bạn...">
+                                <br />
+                                <button id="commentt" name="commentt" type="button" class="checkout-button btn btn-danger">Bình luận</button>
+                                @*</form>*@
+
+                            </div>
+                        }
+                        <script>
+
+                            $('#commentt').click(function (e) {
+                                var mThDon = $('#MaThucDon').val();
+
+                                var loiNX = $('#LoiNhanXet').val();
+
+                                var mTKhoan = $('#MaTaiKhoan').val();
+                                $.ajax({
+                                    "url": '/Comment/AddReview',
+                                    type: "POST",
+                                    data: { 'mThDon': mThDon, 'loiNX': loiNX, 'mTKhoan': mTKhoan },
+                                    success: function (result) {
+                                        $('#LoiNhanXet').val("");
+                                        $("#Reviews").html(result);
+                                    }
+                                });
+                            });
+                        </script>
+
+                    </div>
+                </div>
+                <div class="clearfix">
+                </div>
+                <div id="productsDetails" class="hot-products">
+                    <h3 class="title">
+                        <strong>
+                            Sản phẩm
+                        </strong>
+                        cùng loại
+                    </h3>
+                    <div class="control">
+                        <a id="prev_hot" class="prev" href="#">
+                            &lt;
+                        </a>
+                        <a id="next_hot" class="next" href="#">
+                            &gt;
+                        </a>
+                    </div>
+                    <ul id="hot">
+                        <li>
+                            <div class="row">
+                                @{
+                                    foreach (var item in ViewBag.CungLoai)
+                                    {
+                                        <div class="col-md-4 col-sm-4">
+                                            <div class="products">
+                                                @{
+                                                    if (item.KhuyenMai != 0)
+                                                    {
+                                                        <div class="offer">-@item.KhuyenMai%</div>
+                                                    }
+
+                                                }
+
+                                                <div class="thumbnail"><a asp-controller="SingleProduct" asp-action="Index" asp-route-id="@item.MaThucDon"><img src="~/user/images/products/@item.HinhAnh" alt="Product Name"></a></div>
+                                                <div class="productname">@item.TenThucDon</div>
+                                                @{
+                                                    if (item.KhuyenMai != 0)
+                                                    {
+                                                        <h4 class="price">@string.Format("{0:N0}", @item.GetGiaKhuyenMai)<u>đ</u>   <span class="sale" style="font-size:15px;"><del>@item.Gia <u>đ</u></del></span></h4>
+                                                    }
+                                                    else
+                                                    {
+                                                        <h4 class="price">
+                                                            @item.GetGiaKhuyenMai<u>đ</u>
+                                                        </h4>
+                                                    }
+
+                                                }
+                                                <div class="button_group">
+                                                    <a><div class="order-button"><button class="button add-cart" data-id="@item.MaThucDon" type="button"><i class="fa fa-shopping-cart"></i> Mua hàng</button></div></a>
+                                                    <a asp-controller="SingleProduct" asp-action="Index" asp-route-id="@item.MaThucDon">
+                                                        <button class="button wishlist" type="button" style="width:140px;font-size:16px;">
+                                                            <i class="fa fa-info-circle" aria-hidden="true"></i>  Chi tiết
+                                                        </button>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+
+                                }
+
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="clearfix">
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="get-newsletter leftbar">
+                    <h3 class="title">
+                        Tìm
+                        <strong>
+                            kiếm
+                        </strong>
+                    </h3>
+                    <form>
+                        <input class="email" type="text" name="txtTimKiem" id="txtTimKiem" placeholder="Bạn tìm gì...?">
+                    </form>
+                </div>
+
+                <script type="text/javascript">
+                    // AJAX call for autocomplete
+                    $(document).ready(function () {
+                        $("#txtTimKiem").keyup(function () {
+                            var key = $(this).val();
+                            $.ajax({
+                                type: "POST",
+                                url: "/Menu/SearchDetail?key="+key,
+                                success: function (data) {
+                                    $("#kq").html(data);
+                                }
+                            });
+                        });
+                    });
+                </script>
+
+                <div class="clearfix">
+                </div>
+                <div class="special-deal leftbar" id="kq">
+                    <h4 class="title">
+                        Sản phẩm
+                        <strong>
+                            xem nhiều nhất
+                        </strong>
+                    </h4>
+
+                    @{
+                        foreach (var item in ViewBag.ListProduct)
+                        {
+                            <div class="special-item">
+                                <div class="product-image">
+                                    <a asp-controller="SingleProduct" asp-action="Index" asp-route-id="@item.MaThucDon">
+                                        <img src="~/user/images/products/@item.HinhAnh">
+
+                                    </a>
+                                </div>
+                                <div class="product-info">
+                                    <p>
+                                        @item.TenThucDon
+                                    </p>
+                                    <h5 class="price" style="float:left;">
+                                        @String.Format("{0:N0}", @item.GetGiaKhuyenMai)<u>đ     </u>
+                                    </h5>
+                                    @{
+                                        if (item.KhuyenMai != 0)
+                                        {
+                                            <div class="old_price"><del><p>&nbsp;&nbsp;@String.Format("{0:N0}", @item.Gia)<u>đ</u></p></del></div>
+
+                                        }
+                                    }
+                                </div>
+                            </div>
+                        }
+                    }
+                </div>
+                <div class="clearfix">
+                </div>
+            </div>
+        </div>
+        <div class="clearfix">
+        </div>
+        <div class="our-brand">
+            <h3 class="title">
+                <strong>
+                    Our
+                </strong>
+                Brands
+            </h3>
+            <div class="control">
+                <a id="prev_brand" class="prev" href="#">
+                    &lt;
+                </a>
+                <a id="next_brand" class="next" href="#">
+                    &gt;
+                </a>
+            </div>
+            <ul id="braldLogo">
+                <li>
+                    <ul class="brand_item">
+                        <li>
+                            <a href="#">
+                                <div class="brand-logo">
+                                    <img src="~/user/images/envato.png" alt="">
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <div class="brand-logo">
+                                    <img src="~/user/images/themeforest.png" alt="">
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <div class="brand-logo">
+                                    <img src="~/user/images/photodune.png" alt="">
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <div class="brand-logo">
+                                    <img src="~/user/images/activeden.png" alt="">
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <div class="brand-logo">
+                                    <img src="~/user/images/envato.png" alt="">
+                                </div>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <ul class="brand_item">
+                        <li>
+                            <a href="#">
+                                <div class="brand-logo">
+                                    <img src="~/user/images/envato.png" alt="">
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <div class="brand-logo">
+                                    <img src="~/user/images/themeforest.png" alt="">
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <div class="brand-logo">
+                                    <img src="~/user/images/photodune.png" alt="">
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <div class="brand-logo">
+                                    <img src="~/user/images/activeden.png" alt="">
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <div class="brand-logo">
+                                    <img src="~/user/images/envato.png" alt="">
+                                </div>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>

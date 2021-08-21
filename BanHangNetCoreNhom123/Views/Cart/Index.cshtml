@@ -1,0 +1,247 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Layout/User/Layout.cshtml";
+}
+
+<div class="container_fullwidth">
+    <div class="container shopping-cart">
+        <div class="row">
+            <div class="col-md-12">
+                <h3 class="title">
+                    Shopping Cart
+                </h3>
+                <table class="shop-table">
+                    <thead>
+                        <tr>
+                            <th>
+                                Ảnh
+                            </th>
+                            <th>
+                                Tên sản phẩm
+                            </th>
+                            <th>
+                                Giá
+                            </th>
+                            <th>
+                                Số lượng
+                            </th>
+                            <th>
+                                
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{
+                            foreach (var item in ViewBag.Cart)
+                            {
+                                                <tr class="item-cart-item">
+                                                    <td>
+                                                        <img src=~/user/images/products/@item.HinhAnh alt="">
+                                                    </td>
+                                                    <td>
+                                                        <div class="shop-details">
+                                                            <div class="productname">
+                                                                @item.TenThucDon
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <h5>
+                                                            @string.Format("{0:N0}", @item.GiaBan)
+                                                            
+                                                        </h5>
+                                                    </td>
+                                                    <td>
+                                                        <a><input type="number" name="soluong" class="soluong" data-url=@item.MaThucDon value=@item.SoLuong style="width:80px;height:35px;" min=1 max=100></a>
+                                                    </td>
+                                                    <script>
+                                                        $(document).ready(function () {
+                                                            $(":input.soluong").bind('keyup mouseup', function () {
+                                                                var value = $(this).val();
+                                                                var id = $(this).attr('data-url');
+                                                                // alert($(this).val());
+                                                                $.ajax({
+                                                                    type: "POST",
+                                                                    url: '/Cart/AjaxUpdateCart',
+                                                                    data: { 'value':value, 'id':id },
+                                                                    success: function (result) {
+                                                                        //alert(result);
+                                                                        //var str = result;
+                                                                        //var n = str.indexOf("+");
+                                                                        //var sale = str.substr(0, n);
+                                                                        //var total = str.substr(n + 1, str.length);
+                                                                        $("#result").html(result+"đ");
+                                                                        $("#subtotal").html(result+"đ");
+                                                                    }
+                                                                });
+                                                            });
+                                                        });
+                                                    </script>
+                                                    <td class="product-remove">
+                                                        <a title="Remove this item" class="remove" asp-controller="cart" asp-action="RemoveItem" asp-route-id="@item.MaThucDon" onclick="return IsDelete()"><i class="fa fa-times" aria-hidden="true"></i></a>
+                                                    </td>
+                                                    <script type="text/javascript">
+                                                        function IsDelete() {
+                                                            return confirm("Bạn có muốn xóa không?");
+                                                        }
+                                                    </script>
+                                                    
+                                                </tr>
+                            }
+
+                        }
+
+                    </tbody>
+                    <tfoot>
+                    </tfoot>
+                </table>
+                <div class="clearfix">
+                </div>
+                <div class="row">
+                    <div class="col-md-4 col-sm-6">
+                       
+                    </div>
+                    <div class="col-md-4 col-sm-6">
+                        <div class="shippingbox">
+                            <div class="subtotal">
+                                <h5>
+                                    Tạm tính
+                                </h5>
+                                <span id="subtotal">
+                                    @string.Format("{0:N0}", ViewBag.Total)<u>đ</u>
+                                </span>
+                            </div>
+                            <div class="subtotal">
+                                <h5>
+                                    Phí ship
+                                </h5>
+                                <span >
+                                    0,00<u>đ</u>
+                                </span>
+                            </div>
+                            <div class="grandtotal">
+                                <h5>
+                                    Tổng tiền
+                                </h5>
+                                <span id="result" name="result">
+                                    @string.Format("{0:N0}", ViewBag.Total) <u>đ</u>
+                                </span>
+                            </div>
+
+                            <a asp-controller="Checkout" asp-action="Index">
+                                <button style="width:100%;margin:0 auto;border:3px solid #808080;">
+                                    Checkout
+                                </button>
+                            </a>
+
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-6">
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="clearfix">
+        </div>
+        <div class="our-brand">
+            <h3 class="title">
+                <strong>
+                    Nhà
+                </strong>
+                sản xuất
+            </h3>
+            <div class="control">
+                <a id="prev_brand" class="prev" href="#">
+                    &lt;
+                </a>
+                <a id="next_brand" class="next" href="#">
+                    &gt;
+                </a>
+            </div>
+            <ul id="braldLogo">
+                <li>
+                    <ul class="brand_item">
+                        <li>
+                            <a href="#">
+                                <div class="brand-logo">
+                                    <img src="~/user/images/envato.png" alt="">
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <div class="brand-logo">
+                                    <img src="~/user/images/themeforest.png" alt="">
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <div class="brand-logo">
+                                    <img src="~/user/images/photodune.png" alt="">
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <div class="brand-logo">
+                                    <img src="~/user/images/activeden.png" alt="">
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <div class="brand-logo">
+                                    <img src="~/user/images/envato.png" alt="">
+                                </div>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <ul class="brand_item">
+                        <li>
+                            <a href="#">
+                                <div class="brand-logo">
+                                    <img src="~/user/images/envato.png" alt="">
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <div class="brand-logo">
+                                    <img src="~/user/images/themeforest.png" alt="">
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <div class="brand-logo">
+                                    <img src="~/user/images/photodune.png" alt="">
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <div class="brand-logo">
+                                    <img src="~/user/images/activeden.png" alt="">
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <div class="brand-logo">
+                                    <img src="~/user/images/envato.png" alt="">
+                                </div>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+

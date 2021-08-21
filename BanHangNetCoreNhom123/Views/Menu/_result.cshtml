@@ -1,0 +1,15 @@
+﻿
+@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+    <ul class="mega-menu-links">
+        @{
+            foreach (var item in ViewBag.LoaiThucDon)
+            {
+                <li><a asp-controller="Menu" asp-action="getProductsByCateNavbar" asp-route-id="@item.MaLoai">@item.TenLoai</a></li>
+            }
+        }
+        @*<li><a asp-controller="Menu" asp-action="getProductsByCateNavbar">Đồ ăn</a></li>
+        <li><a href="productgird.html">Nước giải khátứedfds</a></li>
+        <li><a href="productgird.html">Đồ ăn vặt</a></li>*@
+    </ul>

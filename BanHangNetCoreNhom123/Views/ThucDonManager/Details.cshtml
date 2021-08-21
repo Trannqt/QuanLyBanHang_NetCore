@@ -1,0 +1,76 @@
+﻿@model BanHangNetCoreNhom123.Models.ThucDon
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Layout/Admin/Layout.cshtml";
+}
+
+    <div class="col-6 offset-3" style="background-color:white">
+        <h1>Chi tiết sản phẩm</h1>
+        <hr />
+        <dl class="row" style="color:black;background-color:white">
+            <dt class="col-sm-4">
+                Tên sản phẩm
+            </dt>
+            <dd class="col-sm-8">
+                @Html.DisplayFor(model => model.TenThucDon)
+            </dd>
+            <dt class="col-sm-4">
+                Hình ảnh
+            </dt>
+            <dd class="col-sm-8">
+                <img src="~/user/images/products/@Model.HinhAnh" style="width:70px;height:70px" />
+            </dd>
+            <dt class="col-sm-4">
+                Giá
+            </dt>
+            <dd class="col-sm-8">
+                @String.Format("{0:N0}", Model.Gia) <u>đ</u>
+            </dd>
+            <dt class="col-sm-4">
+                Khuyến mãi
+            </dt>
+            <dd class="col-sm-8">
+                -@Html.DisplayFor(model => model.KhuyenMai)%
+            </dd>
+            <dt class="col-sm-4">
+                Mô tả
+            </dt>
+            <dd class="col-sm-8">
+                @Html.DisplayFor(model => model.MoTa)
+            </dd>
+            <dt class="col-sm-4">
+                Thông tin
+            </dt>
+            <dd class="col-sm-8">
+                @Html.DisplayFor(model => model.Description)
+            </dd>
+            <dt class="col-sm-4">
+                Lượt xem
+            </dt>
+            <dd class="col-sm-8">
+                @Html.DisplayFor(model => model.LuotXem)
+            </dd>
+            <dt class="col-sm-4">
+                Luợt mua
+            </dt>
+            <dd class="col-sm-8">
+                @Html.DisplayFor(model => model.LuotMua)
+            </dd>
+            <dt class="col-sm-4">
+                Loại
+            </dt>
+            <dd class="col-sm-8">
+                @Html.DisplayFor(model => model.MaLoaiNavigation.TenLoai)
+            </dd>
+            <dt class="col-sm-4">
+                Thương hiệu
+            </dt>
+            <dd class="col-sm-8">
+                @Html.DisplayFor(model => model.MaNSXNavigation.TenNSX)
+            </dd>
+            <dd class="col-sm-8">
+                <a asp-action="Index"><input class="btn btn-primary" type="button" value="Trở về" /></a>
+            </dd>
+        </dl>
+    </div>
